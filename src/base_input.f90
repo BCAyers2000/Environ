@@ -264,9 +264,9 @@ MODULE env_base_input
     ! Rigid boundary (ionic) parameters
     !
     CHARACTER(LEN=80) :: radius_mode = 'uff'
-    CHARACTER(LEN=80) :: radius_mode_allowed(4)
+    CHARACTER(LEN=80) :: radius_mode_allowed(5)
     !
-    DATA radius_mode_allowed/'pauling', 'bondi', 'uff', 'muff'/
+    DATA radius_mode_allowed/'pauling', 'bondi', 'uff', 'muff', 'alvarez'/
     !
     ! type of hardcoded solvation radii to be used when solvent_mode = 'ionic'
     !
@@ -278,6 +278,8 @@ MODULE env_base_input
     ! uff     = A.K. Rapp/'{e} et al. J. Am. Chem. Soc. 114(25) pp.10024-10035 (1992)
     !
     ! muff    = uff with local modifications (Nitrogen, see Fisicaro JCTC (2017)
+    !
+    ! alvarez = A cartography of the van der Waals territories, Alvarez, S., Dalton Trans., 2013, 42, 8617-8636 (2013)
     !
     REAL(DP), ALLOCATABLE :: solvationrad(:)
     ! solvationrad radius of the solvation shell for each species when the

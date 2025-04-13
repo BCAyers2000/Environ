@@ -81,8 +81,8 @@ MODULE class_iontype
     !
     CHARACTER(LEN=3) :: elements(92)
     !
-    REAL(DP), DIMENSION(92) :: pauling_radii, bondi_radii, UFF_diameters, &
-                               MUFF_diameters, weights
+REAL(DP), DIMENSION(92) :: pauling_radii, bondi_radii, UFF_diameters, &
+                           MUFF_diameters, alvarez_radii, weights
     !
     DATA elements/ &
         'h', 'he', 'li', 'be', 'b', 'c', 'n', 'o', 'f', 'ne', 'na', 'mg', 'al', 'si', &
@@ -112,6 +112,19 @@ MODULE class_iontype
         0.00_DP, 0.00_DP, 0.00_DP, 0.00_DP, 0.00_DP, 0.00_DP, 0.00_DP, 1.75_DP, & ! -, -, -, -, -, -, -, Pt
         1.66_DP, 1.55_DP, 1.96_DP, 2.02_DP, 0.00_DP, 0.00_DP, 0.00_DP, 0.00_DP, & ! Au, Hg, Tl, Pb, -, -, -, -
         0.00_DP, 0.00_DP, 0.00_DP, 0.00_DP, 0.00_DP, 1.86_DP/ ! -,-,-,-,-,U
+    ! 
+    DATA alvarez_radii/1.20_DP, 1.43_DP, & ! H, He
+        2.12_DP, 1.98_DP, 1.91_DP, 1.77_DP, 1.66_DP, 1.50_DP, 1.46_DP, 1.58_DP, & ! Li, Be, B, C, N, O, F, Ne
+        2.50_DP, 2.51_DP, 2.25_DP, 2.19_DP, 1.90_DP, 1.89_DP, 1.82_DP, 1.83_DP, & ! Na, Mg, Al, Si, P, S, Cl, Ar
+        2.73_DP, 2.62_DP, 2.58_DP, 2.46_DP, 2.42_DP, 2.45_DP, 2.45_DP, 2.44_DP, 2.40_DP, & ! K, Ca, Sc, Ti, V, Cr, Mn, Fe, Co
+        2.40_DP, 2.38_DP, 2.39_DP, 2.32_DP, 2.29_DP, 1.88_DP, 1.82_DP, 1.86_DP, 2.25_DP, & ! Ni, Cu, Zn, Ga, Ge, As, Se, Br, Kr
+        3.21_DP, 2.84_DP, 2.75_DP, 2.52_DP, 2.56_DP, 2.45_DP, 2.44_DP, 2.46_DP, 2.44_DP, & ! Rb, Sr, Y, Zr, Nb, Mo, Tc, Ru, Rh
+        2.15_DP, 2.53_DP, 2.49_DP, 2.43_DP, 2.42_DP, 2.47_DP, 1.99_DP, 2.04_DP, 2.06_DP, & ! Pd, Ag, Cd, In, Sn, Sb, Te, I, Xe
+        3.48_DP, 3.03_DP, 2.98_DP, 2.88_DP, 2.92_DP, 2.95_DP, 0.00_DP, 2.90_DP, & ! Cs, Ba, La, Ce, Pr, Nd, -, Sm
+        2.87_DP, 2.83_DP, 2.79_DP, 2.87_DP, 2.81_DP, 2.83_DP, 2.79_DP, 2.80_DP, & ! Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb
+        2.74_DP, 2.63_DP, 2.53_DP, 2.57_DP, 2.49_DP, 2.48_DP, 2.41_DP, 2.29_DP, & ! Lu, Hf, Ta, W, Re, Os, Ir, Pt
+        2.32_DP, 2.45_DP, 2.47_DP, 2.60_DP, 2.54_DP, 0.00_DP, 0.00_DP, 0.00_DP, & ! Au, Hg, Tl, Pb, Bi, -, -, -
+        0.00_DP, 0.00_DP, 2.80_DP, 2.93_DP, 2.88_DP, 2.71_DP/ ! -,-,Ac,Th,Pa,U
     !
     DATA UFF_diameters/2.886_DP, 2.362_DP, & ! H, He
         2.451_DP, 2.745_DP, 4.083_DP, 3.851_DP, 3.660_DP, 3.500_DP, 3.364_DP, 3.243_DP, & ! Li, Be, B, C, N, O, F, Ne
@@ -292,7 +305,7 @@ CONTAINS
     !>
     !!
     !------------------------------------------------------------------------------------
-    SUBROUTINE set_iontype_defaults(this, index, radius_mode)
+  SUBROUTINE set_iontype_defaults(this, index, radius_mode)
         !--------------------------------------------------------------------------------
         !
         IMPLICIT NONE
@@ -324,6 +337,9 @@ CONTAINS
             !
         CASE ('muff')
             this%solvationrad = MUFF_diameters(this%atmnum) * 0.5_DP
+            !
+        CASE ('alvarez')
+            this%solvationrad = alvarez_radii(this%atmnum)
             !
         CASE DEFAULT
             CALL io%error(routine, "Unknown radius_mode", 1)
