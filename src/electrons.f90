@@ -150,7 +150,7 @@ CONTAINS
         !
         CLASS(environ_electrons), INTENT(INOUT) :: this
         !
-        REAL(DP), PARAMETER :: tol = 5.D-3
+        REAL(DP), PARAMETER :: tol = 1.D-2
         !
         CHARACTER(LEN=80) :: routine = 'update_environ_electrons'
         !
