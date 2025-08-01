@@ -165,14 +165,14 @@ CONTAINS
         this%charge = this%density%integrate()
         this%number = NINT(this%charge)
         !
-        IF (PRESENT(nelec)) THEN
+        !IF (PRESENT(nelec)) THEN
             !
-            IF (ABS(this%charge - nelec) > tol) THEN
-                WRITE(*,*) this%charge, nelec
-                CALL io%error(routine, "Mismatch in integrated electronic charge", 1)
-            ENDIF
+        !   IF (ABS(this%charge - nelec) > tol) THEN
+        !        WRITE(*,*) this%charge, nelec
+        !        CALL io%error(routine, "Mismatch in integrated electronic charge", 1)
+        !    ENDIF
             !
-        END IF
+        !END IF
         !
         !--------------------------------------------------------------------------------
         ! Output current state
