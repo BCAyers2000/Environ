@@ -81,7 +81,7 @@ MODULE class_iontype
     !
     CHARACTER(LEN=3) :: elements(92)
     !
-    REAL(DP), DIMENSION(92) :: pauling_radii, bondi_radii, alvarez_radii, UFF_diameters, &
+    REAL(DP), DIMENSION(101) :: pauling_radii, bondi_radii, alvarez_radii, UFF_diameters, &
                                MUFF_diameters, weights    
     !
     DATA elements/ &
