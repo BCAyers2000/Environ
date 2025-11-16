@@ -304,7 +304,6 @@ CONTAINS
     !------------------------------------------------------------------------------------
     !>
     !!
-    !------------------------------------------------------------------------------------
     SUBROUTINE set_iontype_defaults(this, index, radius_mode)
         !--------------------------------------------------------------------------------
         !
@@ -327,26 +326,25 @@ CONTAINS
         SELECT CASE (radius_mode)
             !
         CASE ('pauling')
-            this%solvationrad = pauling_radii(this%atmnum)
+            this%solvationrad = pauling_radii(this%atmnum) / BOHR_RADIUS_ANGS
             !
         CASE ('alvarez')
             this%solvationrad = alvarez_radii(this%atmnum)
+            ! alvarez_radii already in Bohr, no conversion needed
             !
         CASE ('bondi')
-            this%solvationrad = bondi_radii(this%atmnum)
+            this%solvationrad = bondi_radii(this%atmnum) / BOHR_RADIUS_ANGS
             !
         CASE ('uff')
-            this%solvationrad = UFF_diameters(this%atmnum) * 0.5_DP
+            this%solvationrad = UFF_diameters(this%atmnum) * 0.5_DP / BOHR_RADIUS_ANGS
             !
         CASE ('muff')
-            this%solvationrad = MUFF_diameters(this%atmnum) * 0.5_DP
+            this%solvationrad = MUFF_diameters(this%atmnum) * 0.5_DP / BOHR_RADIUS_ANGS
             !
         CASE DEFAULT
             CALL io%error(routine, "Unknown radius_mode", 1)
             !
         END SELECT
-        !
-        this%solvationrad = this%solvationrad / BOHR_RADIUS_ANGS
         !
         !--------------------------------------------------------------------------------
     END SUBROUTINE set_iontype_defaults
