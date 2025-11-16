@@ -81,7 +81,7 @@ MODULE class_iontype
     !
     CHARACTER(LEN=3) :: elements(92)
     !
-    REAL(DP), DIMENSION(92) :: pauling_radii, bondi_radii, UFF_diameters, &
+    REAL(DP), DIMENSION(92) :: pauling_radii, bondi_radii, pauling_radii, UFF_diameters, &
                                MUFF_diameters, weights
     !
     DATA elements/ &
@@ -99,6 +99,21 @@ MODULE class_iontype
         0.00_DP, 0.00_DP, 10*0.00_DP, 0.00_DP, 0.00_DP, 0.00_DP, 0.00_DP, 1.95_DP, 0.00_DP, & ! -,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,Br,-
         0.00_DP, 0.00_DP, 10*0.00_DP, 0.00_DP, 0.00_DP, 0.00_DP, 0.00_DP, 2.15_DP, 0.00_DP, & ! -,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,I,-
         38*0.00_DP/ ! ...
+    !
+    DATA alvarez_radii/2.26_DP, 2.70_DP, & ! H, He
+        4.01_DP, 3.74_DP, 3.61_DP, 3.34_DP, 3.14_DP, 2.83_DP, 2.76_DP, 2.99_DP, & ! Li, Be, B, C, N, O, F, Ne
+        4.72_DP, 4.74_DP, 4.25_DP, 4.14_DP, 3.59_DP, 3.57_DP, 3.44_DP, 3.67_DP, & ! Na, Mg, Al, Si, P, S, Cl, Ar
+        5.16_DP, 4.95_DP, 4.88_DP, 4.65_DP, 4.57_DP, 4.63_DP, 4.63_DP, 4.61_DP, 4.54_DP, & ! K, Ca, Sc, Ti, V, Cr, Mn, Fe, Co
+        4.54_DP, 4.50_DP, 4.52_DP, 4.38_DP, 4.33_DP, 3.55_DP, 3.44_DP, 3.51_DP, 3.91_DP, & ! Ni, Cu, Zn, Ga, Ge, As, Se, Br, Kr
+        85.1_DP, 87.1_DP, 6.06_DP, 5.36_DP, 5.19_DP, 4.76_DP, 4.84_DP, 4.63_DP, 4.61_DP, & ! Rb, Sr, Y, Zr, Nb, Mo, Tc, Ru, Rh
+        4.64_DP, 4.61_DP, 4.06_DP, 4.78_DP, 4.70_DP, 4.59_DP, 4.57_DP, 4.67_DP, 3.89_DP, & ! Pd, Ag, Cd, In, Sn, Sb, Te, I, Xe
+        6.57_DP, 5.72_DP, 5.63_DP, 5.44_DP, 5.52_DP, 5.57_DP, 5.48_DP, 5.42_DP, & ! Cs, Ba, La, Ce, Pr, Nd, Pm, Sm
+        5.34_DP, 5.27_DP, 5.42_DP, 5.30_DP, 5.35_DP, 5.27_DP, 5.29_DP, 5.18_DP, & ! Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb
+        4.97_DP, 4.78_DP, 4.85_DP, 4.70_DP, 4.68_DP, 4.55_DP, 4.33_DP, 4.38_DP, & ! Lu, Hf, Ta, W, Re, Os, Ir, Pt
+        4.63_DP, 4.67_DP, 4.91_DP, 4.80_DP, 5.29_DP, 5.53_DP, 5.44_DP, 5.12_DP, & ! Au, Hg, Tl, Pb, Bi, Po, At, Rn
+        5.31_DP, 5.35_DP, 5.76_DP, 6.42_DP, 5.76_DP, 5.10_DP, 101.0_DP, 101.0_DP, 101.0_DP, & ! Fr, Ra, Ac, Th, Pa, U, Np, Pu, Am
+        101.0_DP, 101.0_DP, 101.0_DP, 101.0_DP, 101.0_DP, 101.0_DP, 101.0_DP, 101.0_DP, & ! Cm, Bk, Cf, Es, Fm, Md, No, Lr
+        101.0_DP, 101.0_DP, 101.0_DP, 101.0_DP, 101.0_DP, 101.0_DP, 101.0_DP/ ! Rf, Db, Sg, Bh, Hs, Mt, Ds
     !
     DATA bondi_radii/1.20_DP, 1.40_DP, & ! H, He
         1.82_DP, 1.45_DP, 1.80_DP, 1.70_DP, 1.55_DP, 1.52_DP, 1.47_DP, 1.54_DP, & ! Li, Be, B, C, N, O, F, Ne
@@ -315,6 +330,9 @@ CONTAINS
             !
         CASE ('pauling')
             this%solvationrad = pauling_radii(this%atmnum)
+            !
+        CASE ('alvarez')
+            this%solvationrad = alvarez_radii(this%atmnum)
             !
         CASE ('bondi')
             this%solvationrad = bondi_radii(this%atmnum)
