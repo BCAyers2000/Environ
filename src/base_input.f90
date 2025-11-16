@@ -266,12 +266,14 @@ MODULE env_base_input
     CHARACTER(LEN=80) :: radius_mode = 'uff'
     CHARACTER(LEN=80) :: radius_mode_allowed(4)
     !
-    DATA radius_mode_allowed/'pauling', 'bondi', 'uff', 'muff'/
+    DATA radius_mode_allowed/'pauling', 'alvarez', 'bondi', 'uff', 'muff'/
     !
     ! type of hardcoded solvation radii to be used when solvent_mode = 'ionic'
     !
     ! pauling = R.C. Weast, ed., Handbook of chemistry and physics
     !           (CRC Press, Cleveland, 1981)
+    !
+    ! alvarez = Alvarez, S.  Dalt. Trans. 42, 8617 (2013)
     !
     ! bondi   = A. Bondi, J. Phys. Chem. 68, 441 (1964)
     !
