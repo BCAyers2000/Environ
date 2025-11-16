@@ -264,7 +264,7 @@ MODULE env_base_input
     ! Rigid boundary (ionic) parameters
     !
     CHARACTER(LEN=80) :: radius_mode = 'uff'
-    CHARACTER(LEN=80) :: radius_mode_allowed(4)
+    CHARACTER(LEN=80) :: radius_mode_allowed(5)
     !
     DATA radius_mode_allowed/'pauling', 'alvarez', 'bondi', 'uff', 'muff'/
     !
